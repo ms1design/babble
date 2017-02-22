@@ -23,12 +23,14 @@ export default {
 
               withPluginApi('0.1', api => {
                 api.decorateWidget('header-icons:before', function(helper) {
+                  
+                  // DEBUG
+                  console.info('babble', component, Babble.topicForComponent(component));
+                  
                   let topic = Babble.topicForComponent(component)
                   let contents = []
 
-                  if (!Babble.disabled() &&
-                      api.getCurrentUser() &&
-                      Discourse.SiteSettings.babble_enabled) {
+                  if (!Babble.disabled() && api.getCurrentUser() && Discourse.SiteSettings.babble_enabled) {
 
                     contents.push(helper.attach('header-dropdown', {
                       title:         'babble.title',
