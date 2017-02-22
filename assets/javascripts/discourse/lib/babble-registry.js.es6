@@ -29,16 +29,6 @@ export default Ember.Object.create({
 
   topicForComponent(component) {
     let [topicId, x] = _.find([...this._bindings], ([x, elementId]) => { return elementId == component.elementId }) || []
-    
-    console.info({
-      fn: 'babble.topicForComponent',
-      arguments: component,
-      this: this,
-      topicId: topicId,
-      x: x,
-      return: this._topics[topicId]
-    })
-    
     return this._topics[topicId]
   }
 })
