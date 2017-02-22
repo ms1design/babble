@@ -6,22 +6,24 @@ import { withPluginApi } from 'discourse/lib/plugin-api'
 export default {
   name: 'babble-shoutbox-init',
   initialize() {
+    
     if (!Discourse.SiteSettings.babble_shoutbox) { return }
     
-    if (typeof Babble !== 'undefined') {
-      let __topic = Babble.topicForComponent(component);
-      if (!__topic || typeof __topic === 'undefined') {
-        console.info('ERROR: Babble.topicForComponent(component):', __topic);
-      } else {
-        console.info('OK: Babble.topicForComponent(component):', __topic);
-      }
-    } else {
-      console.info('ERROR: no babble here');
-    }
-
     SiteHeader.reopen({
       didInsertElement() {
         const component = this
+        
+        if (typeof Babble !== 'undefined') {
+          let __topic = Babble.topicForComponent(component);
+          if (!__topic || typeof __topic === 'undefined') {
+            console.info('ERROR: Babble.topicForComponent(component):', __topic);
+          } else {
+            console.info('OK: Babble.topicForComponent(component):', __topic);
+          }
+        } else {
+          console.info('ERROR: no babble here');
+        }
+
         this._super()
         Ember.run.scheduleOnce('afterRender',() => {
           ajax('/babble/topics.json').then((data) => {
