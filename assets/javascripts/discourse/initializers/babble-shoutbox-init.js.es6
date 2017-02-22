@@ -7,22 +7,20 @@ export default {
   name: 'babble-shoutbox-init',
   initialize() {
     if (!Discourse.SiteSettings.babble_shoutbox) { return }
+    
+    if (typeof Babble !== 'undefined') {
+      let __topic = Babble.topicForComponent(component);
+      if (!__topic || typeof __topic === 'undefined') {
+        console.info('ERROR: Babble.topicForComponent(component):', __topic);
+      } else {
+        console.info('OK: Babble.topicForComponent(component):', __topic);
+      }
+    } else {
+      console.info('ERROR: no babble here');
+    }
 
     SiteHeader.reopen({
-
       didInsertElement() {
-        
-        if (typeof Babble !== 'undefined') {
-          let __topic = Babble.topicForComponent(component);
-          if (!__topic || typeof __topic === 'undefined') {
-            console.info('ERROR: Babble.topicForComponent(component):', __topic);
-          } else {
-            console.info('OK: Babble.topicForComponent(component):', __topic);
-          }
-        } else {
-          console.info('ERROR: no babble here');
-        }
-          
         const component = this
         this._super()
         Ember.run.scheduleOnce('afterRender',() => {
