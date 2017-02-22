@@ -24,10 +24,7 @@ export default {
               withPluginApi('0.1', api => {
                 api.decorateWidget('header-icons:before', function(helper) {
                   
-                  // DEBUG
-                  console.info('babble', component, Babble.topicForComponent(component));
-                  
-                  let topic = Babble.topicForComponent(component)
+                  const topic = Babble.topicForComponent(component)
                   let contents = []
 
                   if (!Babble.disabled() && api.getCurrentUser() && Discourse.SiteSettings.babble_enabled) {
@@ -39,7 +36,7 @@ export default {
                       active:        component.babbleVisible,
                       action:        'toggleBabble',
                       contents() {
-                        if (!topic || !topic.visibleUnreadCount || component.babbleVisible) { return }
+                        if (!topic.visibleUnreadCount || component.babbleVisible) { return }
                         
                         return this.attach('link', {
                           action:    'toggleBabble',
