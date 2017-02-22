@@ -23,7 +23,7 @@ export default {
 
               withPluginApi('0.1', api => {
                 api.decorateWidget('header-icons:before', function(helper) {
-                  const topic = Babble.topicForComponent(component)
+                  let topic = Babble.topicForComponent(component)
                   let contents = []
 
                   if (!Babble.disabled() &&
@@ -37,7 +37,8 @@ export default {
                       active:        component.babbleVisible,
                       action:        'toggleBabble',
                       contents() {
-                        if (!topic.visibleUnreadCount || component.babbleVisible) { return }
+                        if (!topic || !topic.visibleUnreadCount || component.babbleVisible) { return }
+                        
                         return this.attach('link', {
                           action:    'toggleBabble',
                           className: 'badge-notification unread-notifications',
